@@ -18,7 +18,7 @@ async function runScript(fileName, scriptLabel) {
 
     await chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      files: [`scripts/${fileName}`]
+      files: [`Scripts/${fileName}`]
     });
 
     statusMessage.classList.remove("error");
@@ -26,18 +26,25 @@ async function runScript(fileName, scriptLabel) {
   } catch (error) {
     console.error(error);
     statusMessage.classList.add("error");
-    statusMessage.textContent = `Could not run ${scriptLabel}.`;
+    statusMessage.textContent = `Could not run ${scriptLabel}. ${error.message}`;
   }
 }
 
 document.getElementById("runWebaimColor").addEventListener("click", () => {
-  runScript("copy-color-from-webaim.js", "Copy Color from Webaim script");
+  runScript("Copy Color from Webaim script.js", "Copy Color from Webaim script");
 });
 
 document.getElementById("runUtestCycle").addEventListener("click", () => {
-  runScript("copy-utest-cycle-name-and-id.js", "Copy UTest cycle name and ID");
+  runScript("Copy UTest cycle name and ID.js", "Copy UTest cycle name and ID");
 });
 
 document.getElementById("runAnHover").addEventListener("click", () => {
   runScript("AN -Hover.js", "AN-hover");
+});
+document.getElementById("runSbCommentInfo").addEventListener("click", () => {
+  runScript("SB COmment info.js", "SB Comment info");
+});
+
+document.getElementById("runSbTestCycleInfo").addEventListener("click", () => {
+  runScript("SB Test Cycle info.js", "SB Test Cycle info");
 });

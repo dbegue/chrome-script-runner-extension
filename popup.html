@@ -5,293 +5,138 @@
   <title>Script Runner</title>
 
   <style>
-    :root {
-      --bg-main: #071226;
-      --bg-card: #111d33;
-      --bg-card-soft: #17243d;
-      --border-soft: #2b3b59;
-      --border-blue: #3478f6;
-      --text-main: #ffffff;
-      --text-muted: #9fb1d1;
-      --blue: #3b82f6;
-      --blue-light: #60a5fa;
-      --cyan: #5eead4;
-      --green: #4ade80;
-      --purple: #c084fc;
-      --danger: #f87171;
-    }
-
     * {
       box-sizing: border-box;
     }
 
     body {
-      width: 380px;
-      margin: 0;
-      padding: 16px;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #071226 0%, #0b1830 100%);
-      color: var(--text-main);
-    }
+  margin: 0;
+  padding: 12px;
+  width: 300px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f3f4f6;
+  color: #374151;
+}
 
-    .popup {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+.popup-wrapper {
+  border: 2px solid #b8b8b8;
+  border-radius: 22px;
+  padding: 12px;
+  background: #f7f7f7;
+}
 
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
 
-    .logo {
-      width: 46px;
-      height: 46px;
-      border-radius: 15px;
-      background: #0f2142;
-      border: 1px solid #1f4ca3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--blue-light);
-      font-size: 24px;
-      box-shadow: 0 0 16px rgba(59, 130, 246, 0.25);
-    }
+.script-tile {
+  width: 100%;
+  min-height: 66px;
+  border: 2px solid #b8b8b8;
+  border-radius: 16px;
+  background: #f9f9f9;
+  color: #4b5563;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+  transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 24px;
-      line-height: 1.1;
-      color: var(--text-main);
-    }
+.script-tile:hover {
+  background: #f0f0f0;
+  border-color: #9ca3af;
+}
 
-    .subtitle {
-      margin: 4px 0 0;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
+.script-tile:active {
+  transform: scale(0.98);
+}
 
-    .summary-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #102245 0%, #0c1830 100%);
-      border: 1px solid var(--border-blue);
-      box-shadow: 0 0 18px rgba(59, 130, 246, 0.25);
-    }
+.script-tile:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
 
-    .summary-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: #13264d;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--blue-light);
-      font-size: 20px;
-      border: 1px solid #254b93;
-    }
+.status {
+  min-height: 18px;
+  margin: 10px 2px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #047857;
+  text-align: center;
+}
 
-    .summary-content strong {
-      display: block;
-      font-size: 18px;
-      color: var(--text-main);
-    }
-
-    .summary-content strong span {
-      color: var(--cyan);
-      font-size: 26px;
-      margin-right: 4px;
-    }
-
-    .summary-content p {
-      margin: 4px 0 0;
-      color: var(--text-muted);
-      font-size: 13px;
-    }
-
-    .script-card {
-      padding: 14px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, var(--bg-card) 0%, #0e1a2f 100%);
-      border: 1px solid var(--border-soft);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
-    }
-
-    .script-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .script-title {
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.35;
-      color: var(--text-main);
-    }
-
-    .script-description {
-      margin: 4px 0 0;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .badge {
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .badge-cyan {
-      color: var(--cyan);
-      border: 1px solid rgba(94, 234, 212, 0.6);
-      background: rgba(94, 234, 212, 0.08);
-    }
-
-    .badge-blue {
-      color: var(--blue-light);
-      border: 1px solid rgba(96, 165, 250, 0.7);
-      background: rgba(96, 165, 250, 0.1);
-    }
-
-    .badge-purple {
-      color: var(--purple);
-      border: 1px solid rgba(192, 132, 252, 0.7);
-      background: rgba(192, 132, 252, 0.1);
-    }
-
-    .run-button {
-      width: 100%;
-      min-height: 44px;
-      border: 1px solid #5aa0ff;
-      border-radius: 12px;
-      background: linear-gradient(180deg, #2f6df6 0%, #1d4ed8 100%);
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 0 14px rgba(59, 130, 246, 0.55);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    }
-
-    .run-button:hover {
-      background: linear-gradient(180deg, #4b8cff 0%, #2563eb 100%);
-      box-shadow: 0 0 20px rgba(96, 165, 250, 0.7);
-    }
-
-    .run-button:active {
-      transform: scale(0.98);
-    }
-
-    .run-button:focus-visible {
-      outline: 3px solid #ffffff;
-      outline-offset: 3px;
-    }
-
-    .status {
-      min-height: 18px;
-      margin: 0;
-      color: var(--green);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .status.error {
-      color: var(--danger);
-    }
-
-    .footer {
-      padding-top: 10px;
-      border-top: 1px solid var(--border-soft);
-      display: flex;
-      justify-content: space-between;
-      color: var(--text-muted);
-      font-size: 12px;
-    }
+.status.error {
+  color: #b91c1c;
+}
   </style>
 </head>
 
 <body>
-  <main class="popup">
-    <header class="header">
-      <div class="logo" aria-hidden="true">⚡</div>
-
-      <div>
-        <h1>Script Runner</h1>
-        <p class="subtitle">Accessibility scripts</p>
-      </div>
-    </header>
-
-    <section class="summary-card" aria-label="Scripts summary">
-      <div class="summary-icon" aria-hidden="true">&lt;/&gt;</div>
-
-      <div class="summary-content">
-        <strong><span>3</span> Scripts Available</strong>
-        <p>Ready to run on current page</p>
-      </div>
-    </section>
-
-    <section class="script-card">
-      <div class="script-header">
-        <div>
-          <h2 class="script-title">Copy Color from Webaim script</h2>
-          <p class="script-description">Copy contrast checker color values.</p>
-        </div>
-
-        <span class="badge badge-cyan">WebAIM</span>
-      </div>
-
-      <button class="run-button" id="runWebaimColor" type="button">
-        ▶ Run
+  <main class="popup-wrapper">
+    <div class="grid">
+      <button
+        class="script-tile"
+        id="runWebaimColor"
+        type="button"
+        aria-label="Run Copy Color from Webaim script"
+        title="Run Copy Color from Webaim script"
+      >
+        Webaim<br />colors
       </button>
-    </section>
 
-    <section class="script-card">
-      <div class="script-header">
-        <div>
-          <h2 class="script-title">Copy UTest cycle name and ID</h2>
-          <p class="script-description">Copy cycle information from UTest.</p>
-        </div>
-
-        <span class="badge badge-blue">UTest</span>
-      </div>
-
-      <button class="run-button" id="runUtestCycle" type="button">
-        ▶ Run
+      <button
+        class="script-tile"
+        id="runUtestCycle"
+        type="button"
+        aria-label="Run Copy UTest cycle name and ID"
+        title="Run Copy UTest cycle name and ID"
+      >
+        UTest<br />cycle
       </button>
-    </section>
 
-    <section class="script-card">
-      <div class="script-header">
-        <div>
-          <h2 class="script-title">AN-hover</h2>
-          <p class="script-description">Run AN-hover helper script.</p>
-        </div>
-
-        <span class="badge badge-purple">Helper</span>
-      </div>
-
-      <button class="run-button" id="runAnHover" type="button">
-        ▶ Run
+      <button
+        class="script-tile"
+        id="runAnHover"
+        type="button"
+        aria-label="Run AN-hover"
+        title="Run AN-hover"
+      >
+        AN-hover
       </button>
-    </section>
+      
+       <button
+  class="script-tile"
+  id="runSbCommentInfo"
+  type="button"
+  aria-label="Run SB Comment info"
+  title="Run SB Comment info"
+>
+  SB<br />Comment
+</button>
+
+<button
+  class="script-tile"
+  id="runSbTestCycleInfo"
+  type="button"
+  aria-label="Run SB Test Cycle info"
+  title="Run SB Test Cycle info"
+>
+  SB Cycle
+</button>
+
+     
+    </div>
 
     <p class="status" id="statusMessage" role="status" aria-live="polite"></p>
-
-    <footer class="footer">
-      <span>All scripts run locally</span>
-      <span>v1.0.0</span>
-    </footer>
   </main>
 
   <script src="popup.js"></script>
