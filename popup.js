@@ -22,3 +22,7 @@ document.getElementById("runScript1").addEventListener("click", () => {
 document.getElementById("runScript2").addEventListener("click", () => {
   runScript("Copy UTest cycle name and ID.js");
 });
+
+document.getElementById("runScript3").addEventListener("click", () => {
+  runScript("AN-hover.js");
+});
