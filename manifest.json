@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Script Runner Extension",
+  "version": "1.0.0",
+  "description": "Chrome extension to run accessibility scripts from the browser.",
+  "permissions": [
+    "scripting",
+    "activeTab"
+  ],
+  "action": {
+    "default_title": "Script Runner",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
