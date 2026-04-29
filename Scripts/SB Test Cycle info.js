@@ -155,13 +155,40 @@
     formatDate(batch2)
   ].join('\t');
 
-  navigator.clipboard.writeText(row)
-    .then(() => {
-      console.log('Fila copiada al portapapeles:\n', row);
-      showToast('La fila se copió al portapapeles');
-    })
-    .catch((err) => {
-      console.error('No se pudo copiar al portapapeles:', err);
-      showToast('No se pudo copiar al portapapeles');
-    });
+ function copyToClipboard(text) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'fixed';
+  textarea.style.top = '-9999px';
+  textarea.style.left = '-9999px';
+  textarea.style.opacity = '0';
+
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
+  let copied = false;
+
+  try {
+    copied = document.execCommand('copy');
+  } catch (err) {
+    console.error('execCommand copy failed:', err);
+  }
+
+  textarea.remove();
+
+  return copied;
+}
+
+const copied = copyToClipboard(row);
+
+if (copied) {
+  console.log('Fila copiada al portapapeles:\n', row);
+  showToast('La fila se copió al portapapeles');
+} else {
+  console.error('No se pudo copiar al portapapeles.');
+  showToast('No se pudo copiar al portapapeles');
+}
 })();
