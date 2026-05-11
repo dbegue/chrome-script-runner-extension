@@ -3,83 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <title>Script Runner</title>
-
   <style>
     * {
       box-sizing: border-box;
     }
 
     body {
-  margin: 0;
-  padding: 12px;
-  width: 300px;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f3f4f6;
-  color: #374151;
-}
+      margin: 0;
+      padding: 12px;
+      width: 300px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f3f4f6;
+      color: #374151;
+    }
 
-.popup-wrapper {
-  border: 2px solid #b8b8b8;
-  border-radius: 22px;
-  padding: 12px;
-  background: #f7f7f7;
-}
+    .popup-wrapper {
+      border: 2px solid #b8b8b8;
+      border-radius: 22px;
+      padding: 12px;
+      background: #f7f7f7;
+    }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
 
-.script-tile {
-  width: 100%;
-  min-height: 66px;
-  border: 2px solid #b8b8b8;
-  border-radius: 16px;
-  background: #f9f9f9;
-  color: #4b5563;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.15;
-  text-align: center;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.05);
-  transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
-}
+    .script-tile {
+      width: 100%;
+      min-height: 66px;
+      border: 2px solid #b8b8b8;
+      border-radius: 16px;
+      background: #f9f9f9;
+      color: #4b5563;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.15;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+      transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+    }
 
-.script-tile:hover {
-  background: #f0f0f0;
-  border-color: #9ca3af;
-}
+    .script-tile:hover {
+      background: #f0f0f0;
+      border-color: #9ca3af;
+    }
 
-.script-tile:active {
-  transform: scale(0.98);
-}
+    .script-tile:active {
+      transform: scale(0.98);
+    }
 
-.script-tile:focus-visible {
-  outline: 3px solid #2563eb;
-  outline-offset: 3px;
-}
+    .script-tile:focus-visible {
+      outline: 3px solid #2563eb;
+      outline-offset: 3px;
+    }
 
-.status {
-  min-height: 18px;
-  margin: 10px 2px 0;
-  font-size: 12px;
-  font-weight: 600;
-  color: #047857;
-  text-align: center;
-}
+    .status {
+      min-height: 18px;
+      margin: 10px 2px 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: #047857;
+      text-align: center;
+    }
 
-.status.error {
-  color: #b91c1c;
-}
+    .status.error {
+      color: #b91c1c;
+    }
   </style>
 </head>
-
 <body>
   <main class="popup-wrapper">
     <div class="grid">
@@ -112,28 +110,36 @@
       >
         AN-hover
       </button>
-      
-       <button
-  class="script-tile"
-  id="runSbCommentInfo"
-  type="button"
-  aria-label="Run SB Comment info"
-  title="Run SB Comment info"
->
-  SB<br />Comment
-</button>
 
-<button
-  class="script-tile"
-  id="runSbTestCycleInfo"
-  type="button"
-  aria-label="Run SB Test Cycle info"
-  title="Run SB Test Cycle info"
->
-  SB Cycle
-</button>
+      <button
+        class="script-tile"
+        id="runSbCommentInfo"
+        type="button"
+        aria-label="Run SB Comment info"
+        title="Run SB Comment info"
+      >
+        SB<br />Comment
+      </button>
 
-     
+      <button
+        class="script-tile"
+        id="runSbTestCycleInfo"
+        type="button"
+        aria-label="Run SB Test Cycle info"
+        title="Run SB Test Cycle info"
+      >
+        SB Cycle
+      </button>
+
+      <button
+        class="script-tile"
+        id="runTriage"
+        type="button"
+        aria-label="Run Triage"
+        title="Run Triage"
+      >
+        Triage
+      </button>
     </div>
 
     <p class="status" id="statusMessage" role="status" aria-live="polite"></p>

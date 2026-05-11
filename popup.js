@@ -41,10 +41,15 @@ document.getElementById("runUtestCycle").addEventListener("click", () => {
 document.getElementById("runAnHover").addEventListener("click", () => {
   runScript("AN -Hover.js", "AN-hover");
 });
+
 document.getElementById("runSbCommentInfo").addEventListener("click", () => {
   runScript("SB COmment info.js", "SB Comment info");
 });
 
 document.getElementById("runSbTestCycleInfo").addEventListener("click", () => {
   runScript("SB Test Cycle info.js", "SB Test Cycle info");
+});
+
+document.getElementById("runTriage").addEventListener("click", () => {
+  runScript("Triage.js", "Triage");
 });
