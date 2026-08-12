@@ -4,142 +4,164 @@
   <meta charset="UTF-8" />
   <title>Script Runner</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+  .script-tile {
+  width: 100%;
+  min-height: 58px;
 
-    body {
-      margin: 0;
-      padding: 12px;
-      width: 300px;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f3f4f6;
-      color: #374151;
-    }
+  border: 1px solid #d1d5db;
+  border-radius: 16px;
 
-    .popup-wrapper {
-      border: 2px solid #b8b8b8;
-      border-radius: 22px;
-      padding: 12px;
-      background: #f7f7f7;
-    }
+  background: #ffffff;
+  color: #111827;
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
 
-    .script-tile {
-      width: 100%;
-      min-height: 66px;
-      border: 2px solid #b8b8b8;
-      border-radius: 16px;
-      background: #f9f9f9;
-      color: #4b5563;
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.15;
-      text-align: center;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px;
-      box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.05);
-      transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
-    }
+  padding: 8px 12px;
 
-    .script-tile:hover {
-      background: #f0f0f0;
-      border-color: #9ca3af;
-    }
+  text-align: left;
+  cursor: pointer;
 
-    .script-tile:active {
-      transform: scale(0.98);
-    }
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 3px 8px rgba(0, 0, 0, 0.05);
 
-    .script-tile:focus-visible {
-      outline: 3px solid #2563eb;
-      outline-offset: 3px;
-    }
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
 
-    .status {
-      min-height: 18px;
-      margin: 10px 2px 0;
-      font-size: 12px;
-      font-weight: 600;
-      color: #047857;
-      text-align: center;
-    }
+.script-icon-wrapper {
+  flex: 0 0 auto;
 
-    .status.error {
-      color: #b91c1c;
-    }
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+  border: #a7b6ce 1px solid;
+
+}
+
+.script-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.script-label {
+  flex: 1;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+
+  color: #1f2937;
+}
+
+.script-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+} 
+body {
+  margin: 0;
+  padding: 12px;
+  width: 300px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.script-tile:hover {
+  background: #a7b6ce;
+  border-color: #a7b6ce;
+  color: #111827;
+}
+
+.script-tile:hover .script-label {
+  color: #111827;
+}
+
+.script-tile:hover .script-icon-wrapper {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.script-tile {
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    color 0.15s ease;
+}
+
+.script-icon-wrapper {
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+
   </style>
 </head>
 <body>
   <main class="popup-wrapper">
-    <div class="grid">
-      <button
-        class="script-tile"
-        id="runWebaimColor"
-        type="button"
-        aria-label="Run Copy Color from Webaim script"
-        title="Run Copy Color from Webaim script"
-      >
-        Webaim<br />colors
-      </button>
+    <div class="script-list">
+      <button class="script-tile" id="runWebaimColor" type="button">
+  <span class="script-icon-wrapper" aria-hidden="true">
+    <img class="script-icon" src="icons/pallete-ready.png" alt="" />
+  </span>
+  <span class="script-label">WebAIM colors</span>
+</button>
 
-      <button
-        class="script-tile"
-        id="runUtestCycle"
-        type="button"
-        aria-label="Run Copy UTest cycle name and ID"
-        title="Run Copy UTest cycle name and ID"
-      >
-        UTest<br />cycle
-      </button>
+<button class="script-tile" id="runUtestCycle" type="button">
+  <span class="script-icon-wrapper" aria-hidden="true">
+    <img class="script-icon" src="icons/info-ready.png" alt="" />
+  </span>
+  <span class="script-label">UTest cycle</span>
+</button>
 
-      <button
-        class="script-tile"
-        id="runAnHover"
-        type="button"
-        aria-label="Run AN-hover"
-        title="Run AN-hover"
-      >
-        AN-hover
-      </button>
+<button class="script-tile" id="runAnHover" type="button">
+  <span class="script-icon-wrapper" aria-hidden="true">
+    <img class="script-icon" src="icons/pointer-ready.png" alt="" />
+  </span>
+  <span class="script-label">AN-hover</span>
+</button>
 
-      <button
-        class="script-tile"
-        id="runSbCommentInfo"
-        type="button"
-        aria-label="Run SB Comment info"
-        title="Run SB Comment info"
-      >
-        SB<br />Comment
-      </button>
+<button class="script-tile" id="runSbCommentInfo" type="button">
+  <span class="script-icon-wrapper" aria-hidden="true">
+    <img class="script-icon" src="icons/comment-ready.png" alt="" />
+  </span>
+  <span class="script-label">SB Comment</span>
+</button>
 
-      <button
-        class="script-tile"
-        id="runSbTestCycleInfo"
-        type="button"
-        aria-label="Run SB Test Cycle info"
-        title="Run SB Test Cycle info"
-      >
-        SB Cycle
-      </button>
+<button class="script-tile" id="runSbTestCycleInfo" type="button">
+  <span class="script-icon-wrapper" aria-hidden="true">
+    <img class="script-icon" src="icons/info-ready.png" alt="" />
+  </span>
+  <span class="script-label">SB Cycle</span>
+</button>
 
-      <button
-        class="script-tile"
-        id="runTriage"
-        type="button"
-        aria-label="Run Triage"
-        title="Run Triage"
-      >
-        Triage
-      </button>
+<button class="script-tile" id="runTriage" type="button">
+  <span class="script-icon-wrapper" aria-hidden="true">
+    <img class="script-icon" src="icons/sort-ready.png" alt="" />
+  </span>
+  <span class="script-label">Triage</span>
+</button>
+
+<button class="script-tile" id="runReportBodyEmail" type="button">
+  <span class="script-icon-wrapper" aria-hidden="true">
+    <img class="script-icon" src="icons/email-read.png" alt="" />
+  </span>
+  <span class="script-label">Report Body Email Content</span>
+</button>
     </div>
 
     <p class="status" id="statusMessage" role="status" aria-live="polite"></p>

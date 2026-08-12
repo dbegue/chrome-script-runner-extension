@@ -53,3 +53,9 @@ document.getElementById("runSbTestCycleInfo").addEventListener("click", () => {
 document.getElementById("runTriage").addEventListener("click", () => {
   runScript("Triage.js", "Triage");
 });
+document.getElementById("runReportBodyEmail").addEventListener("click", () => {
+  runScript(
+    "report-request-body-mail.js",
+    "Report Body Email Content"
+  );
+});
