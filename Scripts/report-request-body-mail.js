@@ -475,11 +475,189 @@ PO: ${valueOrFallback(data.po)}`;
      COPY TO CLIPBOARD
      ========================================================= */
 
-  const copyResult = () => {
+  /* =========================================================
+   COPY TO CLIPBOARD
+   ========================================================= */
 
-    // Chrome DevTools copy() function
-    if (typeof copy === 'function') {
-      copy(emailBody);
+function showCopyButton() {
+  // Remove an existing fallback if present
+  document.getElementById('email-copy-fallback')?.remove();
+
+  const container = document.createElement('div');
+
+  container.id = 'email-copy-fallback';
+
+  Object.assign(container.style, {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: '99999999',
+    background: '#222',
+    color: '#fff',
+    padding: '24px',
+    borderRadius: '10px',
+    boxShadow: '0 6px 24px rgba(0,0,0,.45)',
+    fontFamily: 'Arial, sans-serif',
+    textAlign: 'center'
+  });
+
+  const message = document.createElement('div');
+
+  message.textContent =
+    'Click below to copy the email information';
+
+  Object.assign(message.style, {
+    marginBottom: '16px',
+    fontSize: '16px',
+    fontWeight: '600'
+  });
+
+  const button = document.createElement('button');
+
+  button.type = 'button';
+  button.textContent = 'Copy email information';
+
+  Object.assign(button.style, {
+    padding: '12px 20px',
+    border: '2px solid #fff',
+    borderRadius: '7px',
+    background: '#fff',
+    color: '#222',
+    fontSize: '16px',
+    fontWeight: '700',
+    cursor: 'pointer'
+  });
+
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(emailBody);
+
+      container.remove();
+
+      showToast(
+        '✓ Email information copied to clipboard'
+      );
+
+      console.log(
+        '\n✅ Email information copied to clipboard.'
+      );
+    } catch (error) {
+      console.error(
+        'Clipboard copy failed:',
+        error
+      );
+
+      message.textContent =
+        'Could not copy the email information.';
+    }
+  });
+
+  container.appendChild(message);
+  container.appendChild(button);
+  document.body.appendChild(container);
+
+  button.focus();
+}
+
+
+/* =========================================================
+   COPY TO CLIPBOARD
+   ========================================================= */
+
+function showCopyButton() {
+  // Remove an existing fallback if present
+  document.getElementById('email-copy-fallback')?.remove();
+
+  const container = document.createElement('div');
+
+  container.id = 'email-copy-fallback';
+
+  Object.assign(container.style, {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: '99999999',
+    background: '#222',
+    color: '#fff',
+    padding: '24px',
+    borderRadius: '10px',
+    boxShadow: '0 6px 24px rgba(0,0,0,.45)',
+    fontFamily: 'Arial, sans-serif',
+    textAlign: 'center'
+  });
+
+  const message = document.createElement('div');
+
+  message.textContent =
+    'Click below to copy the email information';
+
+  Object.assign(message.style, {
+    marginBottom: '16px',
+    fontSize: '16px',
+    fontWeight: '600'
+  });
+
+  const button = document.createElement('button');
+
+  button.type = 'button';
+  button.textContent = 'Copy email information';
+
+  Object.assign(button.style, {
+    padding: '12px 20px',
+    border: '2px solid #fff',
+    borderRadius: '7px',
+    background: '#fff',
+    color: '#222',
+    fontSize: '16px',
+    fontWeight: '700',
+    cursor: 'pointer'
+  });
+
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(emailBody);
+
+      container.remove();
+
+      showToast(
+        '✓ Email information copied to clipboard'
+      );
+
+      console.log(
+        '\n✅ Email information copied to clipboard.'
+      );
+    } catch (error) {
+      console.error(
+        'Clipboard copy failed:',
+        error
+      );
+
+      message.textContent =
+        'Could not copy the email information.';
+    }
+  });
+
+  container.appendChild(message);
+  container.appendChild(button);
+  document.body.appendChild(container);
+
+  button.focus();
+}
+
+
+async function copyResult() {
+  try {
+    /*
+     * navigator.clipboard requires the webpage
+     * to be the active/focused document.
+     */
+    if (
+      navigator.clipboard &&
+      document.hasFocus()
+    ) {
+      await navigator.clipboard.writeText(emailBody);
 
       console.log(
         '\n✅ Email information copied to clipboard.'
@@ -492,50 +670,27 @@ PO: ${valueOrFallback(data.po)}`;
       return;
     }
 
-
-    // Clipboard API fallback
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(emailBody)
-        .then(() => {
-
-          console.log(
-            '\n✅ Email information copied to clipboard.'
-          );
-
-          showToast(
-            '✓ Email information copied to clipboard'
-          );
-
-        })
-        .catch(error => {
-
-          console.warn(
-            '\n⚠️ Could not copy automatically.',
-            error
-          );
-
-          showToast(
-            '⚠ Could not copy the email information',
-            4000,
-            true
-          );
-
-        });
-
-      return;
-    }
-
-
+    /*
+     * Page is not focused.
+     * Chrome will likely reject writeText(),
+     * so provide a user-activated fallback.
+     */
     console.warn(
-      '\n⚠️ Could not copy automatically.'
+      'The webpage is not focused. ' +
+      'Displaying manual copy button.'
     );
 
-    showToast(
-      '⚠ Could not copy the email information',
-      4000,
-      true
+    showCopyButton();
+
+  } catch (error) {
+    console.warn(
+      'Automatic clipboard copy was blocked:',
+      error
     );
-  };
+
+    showCopyButton();
+  }
+}
 
 
   /* =========================================================
