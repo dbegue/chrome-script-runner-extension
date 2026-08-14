@@ -419,19 +419,17 @@
      EMAIL BODY
      ========================================================= */
 
-  const emailBody = `Include in body of email:
-
-1. Customer Name: ${valueOrFallback(data.customerName)}
-2. Cycle ID: ${valueOrFallback(data.cycleId)}
-3. Product ID: ${valueOrFallback(data.productId)}
-4. Product Name: ${valueOrFallback(data.productName)}
-5. Test Platform Matrix:
+const emailBody = `Customer Name: ${valueOrFallback(data.customerName)}
+Cycle ID: ${valueOrFallback(data.cycleId)}
+Product ID: ${valueOrFallback(data.productId)}
+Product Name: ${valueOrFallback(data.productName)}
+Test Platform Matrix:
 ${platformText}
-6. Tested pages:
+Tested pages:
 ${pagesText}
-7. Number of Pending Approval Issue Reports: ${data.pendingApprovalIssues}
-8. Report Type: ${valueOrFallback(data.reportType)}
-9. PO: ${valueOrFallback(data.po)}`;
+Number of Pending Approval Issue Reports: ${data.pendingApprovalIssues}
+Report Type: ${valueOrFallback(data.reportType)}
+PO: ${valueOrFallback(data.po)}`;
 
 
   /* =========================================================
@@ -553,4 +551,4 @@ ${pagesText}
 
   return data;
 
-})();s
+})();
