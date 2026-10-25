@@ -1,11 +1,17 @@
+
 (() => {
   try {
-    // Get the Cycle ID (e.g. "#513029") and remove the '#' character
+    // Get the Cycle ID and remove the '#' character
     const cycleLink = document.querySelector('a[aria-label^="Test Cycle ID"]');
     const cycleIdText = cycleLink?.textContent.trim().replace(/^#/, '');
 
-    // Get the H1 heading
-    const h1Text = document.querySelector('h1')?.textContent.trim().replace(/\/\s*$/, '');
+    // Get and clean the H1 heading
+    const h1Text = document.querySelector('h1')?.textContent
+      .trim()
+      .replace(/^\[[^\]]+\]\s*-?\s*/, '') // Remove [Starbucks...] prefix
+      .replace(/^A11Y\s*-\s*/i, '')        // Remove A11Y prefix
+      .replace(/\s*\/\s*Test Cycle\s*$/i, '') // Remove / Test Cycle
+      .trim();
 
     if (!cycleIdText || !h1Text) {
       throw new Error("Cycle ID or heading not found");
@@ -13,35 +19,41 @@
 
     const finalText = `${cycleIdText} - ${h1Text}`;
 
-    // Fallback copy using textarea
+    // Copy using textarea
     const textarea = document.createElement("textarea");
     textarea.value = finalText;
     document.body.appendChild(textarea);
     textarea.select();
-    document.execCommand("copy");
+    const copied = document.execCommand("copy");
     document.body.removeChild(textarea);
+
+    if (!copied) {
+      throw new Error("Failed to copy text");
+    }
 
     // Create toast
     const toast = document.createElement("div");
     toast.textContent = `✅ Copied: ${finalText}`;
-    toast.style.position = "fixed";
-    toast.style.top = "50%";
-    toast.style.left = "50%";
-    toast.style.transform = "translate(-50%, -50%)";
-    toast.style.background = "#333";
-    toast.style.color = "#fff";
-    toast.style.padding = "12px 24px";
-    toast.style.borderRadius = "8px";
-    toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.3)";
-    toast.style.zIndex = 9999;
-    toast.style.fontSize = "16px";
-    toast.style.fontFamily = "sans-serif";
-    toast.style.opacity = "0";
-    toast.style.transition = "opacity 0.3s ease";
+
+    Object.assign(toast.style, {
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      background: "#333",
+      color: "#fff",
+      padding: "12px 24px",
+      borderRadius: "8px",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+      zIndex: "9999",
+      fontSize: "16px",
+      fontFamily: "sans-serif",
+      opacity: "0",
+      transition: "opacity 0.3s ease"
+    });
 
     document.body.appendChild(toast);
 
-    // Fade in
     requestAnimationFrame(() => {
       toast.style.opacity = "1";
     });
@@ -49,7 +61,7 @@
     // Fade out after 2.5 seconds
     setTimeout(() => {
       toast.style.opacity = "0";
-      setTimeout(() => document.body.removeChild(toast), 500);
+      setTimeout(() => toast.remove(), 500);
     }, 2500);
 
   } catch (e) {
